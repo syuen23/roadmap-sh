@@ -45,4 +45,27 @@ export class TaskRepository {
         await this.save();
         return task;
     }
+
+    async updateDescription(id: number, description: string): Promise<Task> {
+        const task = this.tasks.find((t) => t.id === id);
+        if (!task) {
+            throw new TaskNotFoundError(id);
+        }
+
+        task.description = description;
+        task.updatedAt = new Date();
+        await this.save();
+        return task;
+    }
+
+    async updateStatus(id: number, status: TaskStatus): Promise<Task> {
+        const task = this.tasks.find((t) => t.id === id);
+        if (!task) {
+            throw new TaskNotFoundError(id);
+        }
+        task.status = status;
+        task.updatedAt = new Date();
+        await this.save();
+        return task;
+    }
 }
