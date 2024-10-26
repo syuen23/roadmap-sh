@@ -22,4 +22,9 @@ export class TaskService {
         this.validateDescription(description);
         await this.repository.create(description);
     }
+
+    async deleteTask(id: string): Promise<void> {
+        const validatedId = this.validateTaskId(id);
+        await this.repository.delete(validatedId);
+    }
 }
