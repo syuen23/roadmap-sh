@@ -1,5 +1,5 @@
 import { TaskRepository } from "../storage/TaskRepository";
-import { TaskStatus, TaskValidationError } from "../types";
+import { Task, TaskStatus, TaskValidationError } from "../types";
 
 export class TaskService {
     constructor(private repository: TaskRepository) {}
@@ -37,5 +37,9 @@ export class TaskService {
     async updateStatus(id: string, status: TaskStatus): Promise<void> {
         const validatedId = this.validateTaskId(id);
         await this.repository.updateStatus(validatedId, status);
+    }
+
+    async listTasks(status?: TaskStatus): Promise<Task[]> {
+        return await this.repository.list(status);
     }
 }
