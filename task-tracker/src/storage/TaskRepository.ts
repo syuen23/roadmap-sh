@@ -78,4 +78,12 @@ export class TaskRepository {
 
         await this.save();
     }
+
+    async list(status?: TaskStatus): Promise<Task[]> {
+        const tasksToReturn = status
+            ? this.tasks.filter((t) => t.status === status)
+            : this.tasks;
+
+        return tasksToReturn.map((task) => ({ ...task }));
+    }
 }
