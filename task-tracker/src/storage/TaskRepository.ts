@@ -23,4 +23,26 @@ export class TaskRepository {
             updatedAt: new Date(task.updatedAt),
         }));
     }
+
+    private getNextId(): number {
+        return this.tasks.length > 0
+            ? Math.max(...this.tasks.map((t) => t.id)) + 1
+            : 1;
+    }
+
+    private async save(): Promise<void> {
+        await fs.writeFile(this.filePath, JSON.stringify(this.tasks, null, 2));
+    }
+
+    async create(task: Task): Promise<Task> {
+        const newTask: Task = {
+            ...task,
+            id: this.getNextId(),
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        };
+        this.tasks.push(newTask);
+        await this.save();
+        return task;
+    }
 }
