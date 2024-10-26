@@ -27,4 +27,15 @@ export class TaskService {
         const validatedId = this.validateTaskId(id);
         await this.repository.delete(validatedId);
     }
+
+    async updateDescription(id: string, description: string): Promise<void> {
+        const validatedId = this.validateTaskId(id);
+        this.validateDescription(description);
+        await this.repository.updateDescription(validatedId, description);
+    }
+
+    async updateStatus(id: string, status: TaskStatus): Promise<void> {
+        const validatedId = this.validateTaskId(id);
+        await this.repository.updateStatus(validatedId, status);
+    }
 }
