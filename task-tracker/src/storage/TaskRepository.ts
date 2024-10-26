@@ -34,16 +34,17 @@ export class TaskRepository {
         await fs.writeFile(this.filePath, JSON.stringify(this.tasks, null, 2));
     }
 
-    async create(task: Task): Promise<Task> {
+    async create(description: string): Promise<Task> {
         const newTask: Task = {
-            ...task,
             id: this.getNextId(),
+            description: description,
+            status: TaskStatus.TODO,
             createdAt: new Date(),
             updatedAt: new Date(),
         };
         this.tasks.push(newTask);
         await this.save();
-        return task;
+        return newTask;
     }
 
     async updateDescription(id: number, description: string): Promise<Task> {

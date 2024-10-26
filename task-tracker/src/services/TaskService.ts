@@ -17,4 +17,9 @@ export class TaskService {
             throw new TaskValidationError("Description cannot be empty");
         }
     }
+
+    async createTask(description: string): Promise<void> {
+        this.validateDescription(description);
+        await this.repository.create(description);
+    }
 }
