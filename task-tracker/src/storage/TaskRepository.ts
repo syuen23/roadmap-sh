@@ -68,4 +68,14 @@ export class TaskRepository {
         await this.save();
         return task;
     }
+
+    async delete(id: number): Promise<void> {
+        const initialLength = this.tasks.length;
+        this.tasks = this.tasks.filter((t) => t.id !== id);
+        if (this.tasks.length === initialLength) {
+            throw new TaskNotFoundError(id);
+        }
+
+        await this.save();
+    }
 }
