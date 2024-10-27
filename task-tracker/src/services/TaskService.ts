@@ -20,23 +20,27 @@ export class TaskService {
 
     async createTask(description: string): Promise<void> {
         this.validateDescription(description);
-        await this.repository.create(description);
+        const task = await this.repository.create(description);
+        console.log(`Task added successfully (ID: ${task.id})`);
     }
 
     async deleteTask(id: string): Promise<void> {
         const validatedId = this.validateTaskId(id);
         await this.repository.delete(validatedId);
+        console.log(`Task deleted successfully (ID: ${validatedId})`);
     }
 
     async updateDescription(id: string, description: string): Promise<void> {
         const validatedId = this.validateTaskId(id);
         this.validateDescription(description);
         await this.repository.updateDescription(validatedId, description);
+        console.log(`Task updated successfully (ID: ${validatedId})`);
     }
 
     async updateStatus(id: string, status: TaskStatus): Promise<void> {
         const validatedId = this.validateTaskId(id);
         await this.repository.updateStatus(validatedId, status);
+        console.log(`Task updated successfully (ID: ${validatedId})`);
     }
 
     async listTasks(status?: TaskStatus): Promise<Task[]> {
